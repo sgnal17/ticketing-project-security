@@ -40,6 +40,12 @@ public class SecurityConfig {
 
         return http
                 .authorizeRequests()
+                .antMatchers("/user/**").hasRole("ADMIN") //hasRole is adding "ROLE_" automatically
+                .antMatchers("/project/**").hasRole("MANAGER")
+                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
+                .antMatchers("/task/**").hasRole("MANAGER")
+             //   .antMatchers("/task/**").hasAnyRole("ADMIN","Employee")
+                .antMatchers("task/**").hasAuthority("ROLE_EMPLOYEE") // it needs to match how we create user role
                 .antMatchers(
                         "/",
                         "/login",
