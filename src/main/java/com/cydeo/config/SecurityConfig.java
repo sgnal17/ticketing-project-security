@@ -35,7 +35,7 @@ public class SecurityConfig {
 
     }
 
-
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
@@ -55,7 +55,12 @@ public class SecurityConfig {
                 ).permitAll()   // making these things accessible by everyone
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic() // pop-up box
+//          .httpBasic() // pop-up box
+                .formLogin() // defining just my own form for login
+                .loginPage("/login")
+                .defaultSuccessUrl("/welcome")
+                .failureUrl("/login?error=true")
+                .permitAll()
                 .and().build();
     }
 
